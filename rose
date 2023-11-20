@@ -1,0 +1,74 @@
+import streamlit as st
+import random
+
+# Define the correct password
+correct_password = "your_password_here"  # Replace with your desired password
+
+# Define the list of questions and their correct answers
+questions = {
+    "What is the capital of Italy?": "Rome",
+    "Which planet is known as the Red Planet?": "Mars",
+    "How many continents are there on Earth?": "7",
+    "What is the largest mammal in the world?": "Blue Whale"
+}
+
+# Colors for different roses
+rose_colors = ["red", "pink", "orange", "yellow", "white"]
+
+def draw_heart():
+    st.write("❤️")
+
+def draw_rose(color):
+    st.write(f"🌹 Rose ({color.capitalize()})")
+
+def main():
+    st.title("Kulsoom's Love Quiz")
+
+    # Greet the user
+    st.write("Hi, Kulsoom! 💖")
+
+    # Ask for the password
+    password = st.text_input("Enter the password:", type="password")
+
+    if password == correct_password:
+        st.success("Password is correct! Sending you a red heart.")
+        draw_heart()
+
+        # Ask if it should continue
+        continue_quiz = st.checkbox("Do you want to continue the quiz?")
+
+        if continue_quiz:
+            st.write("Great! Let's continue with some questions.")
+
+            # Initialize a variable to keep track of the number of correct answers
+            correct_answers = 0
+
+            # Ask different questions
+            for question, correct_answer in questions.items():
+                user_answer = st.text_input(question)
+
+                if user_answer.lower() == correct_answer.lower():
+                    color = random.choice(rose_colors)
+                    draw_rose(color)
+                    st.success(f"Shabbash, Kulsooma! Here's a {color.capitalize()} rose for you. 🌹")
+                    correct_answers += 1
+                elif user_answer:
+                    st.error("Incorrect answer. Try again.")
+        if correct_answers == 4:
+            # Display a note of love
+            st.write("\n")
+            st.markdown("### A Note of Love")
+            st.write("Dear Kulsoom,\n")
+            st.write("I hope you enjoyed the quiz and the roses. You're special to me, and I cherish every moment with you.")
+            st.write("With love,\nYour Secret Admirer 💕")
+
+            st.write(f"\nYou answered {correct_answers} questions correctly. Shukriya!")
+
+        else:
+            st.write("Okay! If you change your mind, feel free to continue later.")
+
+    elif password:
+        st.error("Incorrect password. Please try again.")
+
+if __name__ == "__main__":
+    main()
